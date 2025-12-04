@@ -23,4 +23,10 @@ def caesar_cipher(string, shift)
   puts string
 end
 
-caesar_cipher("Hello my name is mud!", 5)
+# caesar_cipher("Hello my name is mud!", 7)
+
+puts "Enter a string:"
+str = gets.chomp
+puts "Enter an integer (1-26):"
+int = gets.chomp.to_i
+caesar_cipher(str, int)
