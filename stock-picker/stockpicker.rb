@@ -18,12 +18,12 @@ def stock_picker(arr)
     first_arr = arr.slice(0..(arr.index(arr.max)))
     second_arr = arr.slice((arr.index(arr.min))..-1)
     if (first_arr.max - first_arr.min) > (second_arr.max - second_arr.min)
-      return first_arr.minmax
+      return [first_arr.index(first_arr.min), first_arr.index(first_arr.max)]
     else
-      return second_arr.minmax
+      return [second_arr.index(second_arr.min), second_arr.index(second_arr.max)]
     end
   else
-    return arr.minmax
+    return [arr.index(arr.min), arr.index(arr.max)]
   end
 end
 
