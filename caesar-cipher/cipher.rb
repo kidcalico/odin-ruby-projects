@@ -1,5 +1,9 @@
 def caesar_cipher(string, shift)
+  # Apply modulus to integer to keep the number within 26
   shift %= 26
+
+  # Split the string into an array, map characters to numbers, apply 
+  # the shift and convert each back to a character.
   arr = string.split('')
   cipher = arr.map do |char|
     if char >= "A" && char <= "Z"
@@ -12,13 +16,16 @@ def caesar_cipher(string, shift)
       char
     end
   end
+
+  # Join array and return string
   string = cipher.join('')
   string
 end
 
+# For user interaction in the REPL
 puts "Enter a string:"
 str = gets.chomp
 puts "Enter an integer:"
 int = gets.chomp.to_i
-cipher = caesar_cipher(str, int)
-puts "Your message, encrypted:\n#{cipher}"
+puts "Your message, encrypted:"
+puts caesar_cipher(str, int)
