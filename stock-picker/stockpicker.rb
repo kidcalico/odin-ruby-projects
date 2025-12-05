@@ -1,30 +1,28 @@
-stocks = [17,6,9,20,8,6,1,16]
+stocks = [17,3,6,9,15,8,6,1,14]
 
 def stock_picker(arr)
 
-  # Remove edge cases
-  if arr.index(arr.max) == 0
-    arr.shift
-  end
-  if arr.index(arr.min) == -1
-    arr.pop
+  max_profit = 0
+  buy_sell = []
+
+  # For each value in the array, find the maximum difference in values
+  # for each of the following values in the array. Store maximums and
+  # their indexes in predefined variables, and return those values 
+  # after cycling through all possibilities
+
+  for i in 0..arr.length-1
+    for j in i+1..arr.length-1
+      diff = arr[j] - arr[i]
+      if diff > max_profit
+        max_profit = diff
+        buy_sell = [i, j]
+      end
+    end
   end
 
-  # If the smallest number occurs after the largest number, split the
-  # array and test both sides, to test for the greatest discrepancy,
-  # and return the correct pair, otherwise return the min and max from
-  # the original array.
-  if arr.index(arr.min) > arr.index(arr.max)
-    first_arr = arr.slice(0..(arr.index(arr.max)))
-    second_arr = arr.slice((arr.index(arr.min))..-1)
-    if (first_arr.max - first_arr.min) > (second_arr.max - second_arr.min)
-      return [first_arr.index(first_arr.min), first_arr.index(first_arr.max)]
-    else
-      return [second_arr.index(second_arr.min), second_arr.index(second_arr.max)]
-    end
-  else
-    return [arr.index(arr.min), arr.index(arr.max)]
-  end
+  puts "Maximum profit: #{max_profit}"
+  puts "Days to buy and sell: #{buy_sell}"
+
 end
 
-p stock_picker(stocks)
+stock_picker(stocks)
