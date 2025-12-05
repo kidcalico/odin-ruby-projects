@@ -1,5 +1,3 @@
-require 'pry-byebug'
-
 stocks = [17,6,9,20,8,6,1,16]
 
 def stock_picker(arr)
@@ -16,7 +14,6 @@ def stock_picker(arr)
   # array and test both sides, to test for the greatest discrepancy,
   # and return the correct pair, otherwise return the min and max from
   # the original array.
-  binding.pry
   if arr.index(arr.min) > arr.index(arr.max)
     first_arr = arr.slice(0..(arr.index(arr.max)))
     second_arr = arr.slice((arr.index(arr.min))..-1)
