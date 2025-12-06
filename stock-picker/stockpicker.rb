@@ -4,7 +4,7 @@
 # as stock prices:
 stocks = []
 10.times {|i| stocks.push(rand(20))}
-p stocks
+puts "Stock prices:\n#{stocks}"
 
 def stock_picker(arr)
 
@@ -30,7 +30,7 @@ def stock_picker(arr)
     end
   end
 
-  # Second solution, using for loops
+  # Second solution, using for loops:
   # for i in 0..arr.length-1
   #   for j in i+1..arr.length-1
   #     diff = arr[j] - arr[i]
