@@ -2,24 +2,20 @@ def caesar_cipher(string, shift)
   # Apply modulus to integer to keep the number within 26
   shift %= 26
 
-  # Split the string into an array, map characters to numbers, apply 
+  # Split the string into an array, map characters to numbers, apply
   # the shift and convert each back to a character.
-  arr = string.split('')
-  cipher = arr.map do |char|
+  cipher = string.split("").map do |char|
     if char >= "A" && char <= "Z"
-      num = char.ord - "A".ord + 1 + shift
-      ((num%26) + 64).chr
+      (((char.ord - "A".ord + 1 + shift) % 26) + 64).chr
     elsif char >= "a" && char <= "z"
-      num = char.ord - "a".ord + 1 + shift
-      ((num%26) + 96).chr
+      (((char.ord - "a".ord + 1 + shift) % 26) + 96).chr
     else
       char
     end
   end
 
   # Join array and return string
-  string = cipher.join('')
-  string
+  cipher.join()
 end
 
 # For user interaction in the REPL
