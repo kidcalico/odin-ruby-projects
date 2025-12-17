@@ -1,3 +1,5 @@
+require 'colorize'
+
 module TurnMethods
   def is_winner?(player)
     if @spots[0] == player && @spots[1] == player && @spots[2] == player
@@ -24,7 +26,7 @@ module TurnMethods
   def turn(person, opp, num)
     if spots[num-1] == "X" || spots[num-1] == "O"
       @last_turn = opp
-      puts "Try again!"
+      puts "Try again!".colorize(:red)
     else
       spots[num-1] = person
       @last_turn = person
@@ -36,18 +38,18 @@ module TurnMethods
     if !!(num.match?(/^[1-9]$/))
       return num.to_i
     else
-      puts "Please enter a number 1-9:"
+      puts "Please enter a number 1-9:".colorize(:blue)
       get_move(player, opp)
     end
   end
 
   def wins(person)
     @board.show_board(@spots)
-    puts "#{person} is the winner!"
+    puts "#{person} is the winner!".colorize(:yellow)
   end
 
   def cats_game
     @board.show_board(@spots)
-    puts "Cat's game! Try again."
+    puts "Cat's game! Try again.".colorize(:green)
   end
 end
