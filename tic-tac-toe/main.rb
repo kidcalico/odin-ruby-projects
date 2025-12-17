@@ -25,19 +25,21 @@ module TurnMethods
 
   def x_turn(num)
     if spots[num-1] == "X" || spots[num-1] == "O"
-      @last_turn = "o"
+      @last_turn = "O"
       puts "Try again!"
     else
       spots[num-1] = "X"
+      @last_turn = "X"
     end
   end
 
   def o_turn(num)
     if spots[num-1] == "X" || spots[num-1] == "O"
-      @last_turn = "x"
+      @last_turn = "X"
       puts "Try again!"
     else
       spots[num-1] = "O"
+      @last_turn = "O"
     end
   end
 
@@ -50,6 +52,8 @@ module TurnMethods
     @board.show_board(@spots)
     puts "O is the winner!"
   end
+
+  # Add Cat's Game Logic
 end
 
 class Board
@@ -69,15 +73,16 @@ class Play
   def initialize
     @spots = Array(1..9)
     @board = Board.new
-    @last_turn = "o"
+    @last_turn = "O"
   end
+
+# Instead of x and o, have one turn(player) method
 
   def x
     @board.show_board(@spots)
     puts "Player X, Enter 1-9:"
     num = gets.chomp.to_i
     x_turn(num)
-    @last_turn = "x"
   end
   
   def o
@@ -85,7 +90,6 @@ class Play
     puts "Player O, Enter 1-9:"
     num = gets.chomp.to_i
     o_turn(num)
-    @last_turn = "o"
   end
 end
 
@@ -94,12 +98,16 @@ end
 new_game = Play.new
 while (new_game.is_winner?("X") == false) &&
   (new_game.is_winner?("O") == false) do
-  if new_game.last_turn == "o"
+  if new_game.spots.all? { |s| s.is_a? String }
+    new_game.board.show_board(new_game.spots)
+    puts "Cat's game! Try again."
+    break
+  elsif new_game.last_turn == "O"
     new_game.x
     if new_game.is_winner?("X") == true
       new_game.x_wins
     end
-  elsif new_game.last_turn == "x"
+  elsif new_game.last_turn == "X"
     new_game.o
     if new_game.is_winner?("O") == true
       new_game.o_wins
