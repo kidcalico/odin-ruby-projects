@@ -1,32 +1,20 @@
-require 'colorize'
+require "colorize"
 
+# TurnMethods defines behavior for each turn, and holds methods to
+# check for a winner, as well as returning gameplay feedback.
 module TurnMethods
+  LINES = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]].freeze
+
   def winner?(player)
-    if @spots[0] == player && @spots[1] == player && @spots[2] == player
-      true
-    elsif @spots[3] == player && @spots[4] == player && @spots[5] == player
-      true
-    elsif @spots[6] == player && @spots[7] == player && @spots[8] == player
-      true
-    elsif @spots[0] == player && @spots[3] == player && @spots[6] == player
-      true
-    elsif @spots[1] == player && @spots[4] == player && @spots[7] == player
-      true
-    elsif @spots[2] == player && @spots[5] == player && @spots[8] == player
-      true
-    elsif @spots[0] == player && @spots[4] == player && @spots[8] == player
-      true
-    elsif @spots[2] == player && @spots[4] == player && @spots[6] == player
-      true
-    else
-      false
+    LINES.any? do |line|
+      line.all? { |spot| @spots[spot] == player }
     end
   end
 
   def turn(person, opp, num)
     if %w[X O].include?(spots[num - 1])
       @last_turn = opp
-      puts 'Try again!'.colorize(:red)
+      puts "Try again!".colorize(:red)
     else
       spots[num - 1] = person # .colorize(:green)
       @last_turn = person
@@ -37,7 +25,7 @@ module TurnMethods
     num = gets.chomp
     return num.to_i if num.match?(/^[1-9]$/)
 
-    puts 'Please enter a number 1-9:'.colorize(:blue)
+    puts "Please enter a number 1-9:".colorize(:blue)
     get_move(player, opp)
   end
 

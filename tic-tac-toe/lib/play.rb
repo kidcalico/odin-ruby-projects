@@ -1,6 +1,7 @@
-require_relative 'board'
-require_relative 'turn_methods'
+require_relative "board"
+require_relative "turn_methods"
 
+# Play initializes the array and display, and facilitates each turn
 class Play
   attr_accessor :board, :last_turn, :spots, :num
 
@@ -9,7 +10,7 @@ class Play
   def initialize
     @spots = Array(1..9)
     @board = Board.new
-    @last_turn = 'O'
+    @last_turn = "O"
   end
 
   def play(player, opp)
