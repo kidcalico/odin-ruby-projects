@@ -1,7 +1,7 @@
 require 'colorize'
 
 module TurnMethods
-  def is_winner?(player)
+  def winner?(player)
     if @spots[0] == player && @spots[1] == player && @spots[2] == player
       true
     elsif @spots[3] == player && @spots[4] == player && @spots[5] == player
@@ -24,23 +24,21 @@ module TurnMethods
   end
 
   def turn(person, opp, num)
-    if spots[num-1] == "X" || spots[num-1] == "O"
+    if %w[X O].include?(spots[num - 1])
       @last_turn = opp
-      puts "Try again!".colorize(:red)
+      puts 'Try again!'.colorize(:red)
     else
-      spots[num-1] = person
+      spots[num - 1] = person # .colorize(:green)
       @last_turn = person
     end
   end
 
   def get_move(player, opp)
     num = gets.chomp
-    if !!(num.match?(/^[1-9]$/))
-      return num.to_i
-    else
-      puts "Please enter a number 1-9:".colorize(:blue)
-      get_move(player, opp)
-    end
+    return num.to_i if num.match?(/^[1-9]$/)
+
+    puts 'Please enter a number 1-9:'.colorize(:blue)
+    get_move(player, opp)
   end
 
   def wins(person)

@@ -3,12 +3,13 @@ require_relative 'turn_methods'
 
 class Play
   attr_accessor :board, :last_turn, :spots, :num
+
   include TurnMethods
 
   def initialize
     @spots = Array(1..9)
     @board = Board.new
-    @last_turn = "O"
+    @last_turn = 'O'
   end
 
   def play(player, opp)
