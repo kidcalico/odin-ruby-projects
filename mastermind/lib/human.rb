@@ -8,12 +8,12 @@ class Human
   end
 
   def guess(count, feedback, board)
-    puts "Enter your guess of four colors (eg, 'RYOG'):"
+    puts 'Enter your guess of any four colors:'
     @guess = input
   end
 
   def set_code
-    puts "Enter your code of four colors (eg, 'PBGY'):"
+    puts 'Enter your code of four colors:'
     @code = input
   end
 

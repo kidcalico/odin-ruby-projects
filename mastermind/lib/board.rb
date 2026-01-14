@@ -1,12 +1,17 @@
 class Board
-  attr_accessor :feedback
-
   def feedback(code, guess)
     @code_arr = code.join.split('')
     @guess_arr = guess.join.split('')
 
     @feedback = %w[X X X X]
 
+    reds
+    whites
+
+    @feedback
+  end
+
+  def reds
     @guess_arr.each_index do |i|
       next unless @guess_arr[i] == @code_arr[i]
 
@@ -14,7 +19,9 @@ class Board
       @code_arr[i] = 'X'
       @feedback[i] = 'R'
     end
+  end
 
+  def whites
     @guess_arr.each_index do |i|
       next unless (@guess_arr[i] != 'X') && @code_arr.include?(@guess_arr[i])
 
@@ -22,8 +29,6 @@ class Board
       @guess_arr[i] = 'X'
       @feedback[i] = 'W'
     end
-
-    @feedback
   end
 
   def correct?(code, guess)

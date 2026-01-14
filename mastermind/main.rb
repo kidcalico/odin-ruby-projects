@@ -21,10 +21,7 @@ require_relative 'lib/game'
 require_relative 'lib/board'
 
 include Mastermind
-# include Board
 
-# player = Game.new(Computer, Computer)
-player = Game.new
-# player = Game.new(Computer, Human)
+game = Game.new
 
-player.play
+game.play

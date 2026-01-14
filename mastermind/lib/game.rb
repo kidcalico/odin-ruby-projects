@@ -7,15 +7,17 @@ module Mastermind
   end
 
   class Game
-    attr_reader :code_maker_id, :code_breaker_id, :player, :code
-    attr_accessor :guess, :count, :feedback
-
     def initialize
       puts "Welcome to Mastermind! Please enter 'H' for Human, 'C' for Computer."
       print 'Select the Codemaker (H or C): '
       @codemaker = gets.chomp.upcase[0]
       print 'Select the Codebreaker (H or C): '
       @codebreaker = gets.chomp.upcase[0]
+      player_choice
+      @board = Board.new
+    end
+
+    def player_choice
       if @codemaker == 'H' && @codebreaker == 'H'
         @player = [Human.new, Human.new]
       elsif @codemaker == 'H' && @codebreaker == 'C'
@@ -25,29 +27,19 @@ module Mastermind
       elsif @codemaker == 'C' && @codebreaker == 'H'
         @player = [Computer.new, Human.new]
       end
-      @board = Board.new
-      @feedback = []
     end
-    # def initialize(codemaker, codebreaker)
-    #   @player = [codemaker.new, codebreaker.new]
-    #   @board = Board.new
-    #   @feedback = []
-    # end
 
     def play
-      # puts "Color choices: [R]ed, [O]range, [Y]ellow, [G]reen, [B]lue, [P]urple.\n"
       menu
       @code = @player[0].set_code
       puts "#{@player[0].name} has set the code."
-      print 'SECRET CODE:'
-      @board.color(@code.join)
+      # print 'SECRET CODE:'
+      # @board.color(@code.join)
       @count = 0
       12.times do
-        # puts "TEST Feedback: #{@feedback}"
         @guess = @player[1].guess(@count, @feedback, @board)
-        print "Guess #{@count + 1}: "
+        print "\nGuess #{@count + 1}: "
         @board.color(@guess.join)
-        # binding.pry
         if @board.correct?(@code, @guess)
           puts "#{@player[1].name} wins! Great job guessing the correct code!"
           print 'Code: '
@@ -59,7 +51,6 @@ module Mastermind
         end
         @count += 1
         puts "#{12 - @count} guesses remain."
-        # binding.pry
       end
       return unless @count == 12 && @board.correct?(@code, @guess) == false
 

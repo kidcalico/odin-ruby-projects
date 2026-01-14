@@ -6,9 +6,9 @@ require_relative 'board'
 class Computer
   include Mastermind
 
-  ALL_CODES = COLORS.repeated_permutation(4).to_a.sort_by! { |code| code.uniq.size }
+  attr_reader :name
 
-  attr_reader :code, :codes, :color, :name
+  ALL_CODES = COLORS.repeated_permutation(4).to_a.sort_by! { |code| code.uniq.size }
 
   def initialize
     @codes = ALL_CODES
@@ -20,11 +20,8 @@ class Computer
     if feedback.include?('R') || feedback.include?('W')
       @codes.shift
       @codes = @codes.reject { |code| board.feedback(guess, code).shuffle.sort != feedback.shuffle.sort }
-      puts "CODESLEFT #{@codes.length}\n\n"
-      @codes
     else
       @codes.shift
-      puts "CODESLEFT #{@codes.length}\n\n"
       @codes
     end
   end
@@ -37,7 +34,7 @@ class Computer
 
   def set_code
     @code = []
-    4.times { code.push(rand_color) }
+    4.times { @code.push(rand_color) }
     @code
   end
 
