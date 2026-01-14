@@ -6,10 +6,8 @@ class Computer
 
   attr_reader :name
 
-  ALL_CODES = COLORS.repeated_permutation(4).to_a.sort_by! { |code| code.uniq.size }.freeze
-
   def initialize
-    @codes = ALL_CODES
+    @codes = COLORS.repeated_permutation(4).to_a.sort_by! { |code| code.uniq.size }
     @name = 'Computer'
   end
 
