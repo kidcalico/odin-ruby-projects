@@ -8,7 +8,14 @@ class Computer
 
   def initialize
     @codes = COLORS.repeated_permutation(4).to_a.sort_by! { |code| code.uniq.size }
+    knuth_array
     @name = 'Computer'
+  end
+
+  def knuth_array
+    @codes.unshift(%w[R R O O])
+    @codes.unshift(%w[Y Y G G])
+    @codes.unshift(%w[B B P P])
   end
 
   def refine_guesses(feedback, guess, board)
