@@ -18,9 +18,13 @@ require 'colorize'
 require_relative 'lib/human'
 require_relative 'lib/computer'
 require_relative 'lib/game'
+require_relative 'lib/board'
 
 include Mastermind
+# include Board
 
-player = Game.new(Computer, Human)
+# player = Game.new(Computer, Computer)
+player = Game.new
+# player = Game.new(Computer, Human)
 
 player.play
