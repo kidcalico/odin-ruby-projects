@@ -38,19 +38,12 @@ class Board
   def color(guess)
     arr = guess.split('')
     arr.each do |g|
-      if g == 'R'
-        print 'R'.colorize(:red)
-      elsif g == 'O'
-        print 'O'.colorize(:red).on_yellow
-      elsif g == 'Y'
-        print 'Y'.colorize(:yellow)
-      elsif g == 'G'
-        print 'G'.colorize(:green)
-      elsif g == 'B'
-        print 'B'.colorize(:blue)
-      elsif g == 'P'
-        print 'P'.colorize(:magenta)
-      end
+      print 'R'.colorize(:red) if g == 'R'
+      print 'O'.colorize(:red).on_yellow if g == 'O'
+      print 'Y'.colorize(:yellow) if g == 'Y'
+      print 'G'.colorize(:green) if g == 'G'
+      print 'B'.colorize(:blue) if g == 'B'
+      print 'P'.colorize(:magenta) if g == 'P'
     end
     print "\n\n"
   end

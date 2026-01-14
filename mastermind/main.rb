@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Two types of players: Human and Computer
 # Two player roles: Codemaker and Codebreaker
 

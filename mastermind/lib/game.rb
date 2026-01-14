@@ -1,7 +1,7 @@
 require_relative 'board'
 
 module Mastermind
-  COLORS = %w[R O Y G B P]
+  COLORS = %w[R O Y G B P].freeze
 
   class NewGame
   end
@@ -18,23 +18,16 @@ module Mastermind
     end
 
     def player_choice
-      if @codemaker == 'H' && @codebreaker == 'H'
-        @player = [Human.new, Human.new]
-      elsif @codemaker == 'H' && @codebreaker == 'C'
-        @player = [Human.new, Computer.new]
-      elsif @codemaker == 'C' && @codebreaker == 'C'
-        @player = [Computer.new, Computer.new]
-      elsif @codemaker == 'C' && @codebreaker == 'H'
-        @player = [Computer.new, Human.new]
-      end
+      @player = [Human.new, Human.new] if @codemaker == 'H' && @codebreaker == 'H'
+      @player = [Human.new, Computer.new] if @codemaker == 'H' && @codebreaker == 'C'
+      @player = [Computer.new, Computer.new] if @codemaker == 'C' && @codebreaker == 'C'
+      @player = [Computer.new, Human.new] if @codemaker == 'C' && @codebreaker == 'H'
     end
 
     def play
       menu
       @code = @player[0].set_code
       puts "#{@player[0].name} has set the code."
-      # print 'SECRET CODE:'
-      # @board.color(@code.join)
       @count = 0
       12.times do
         @guess = @player[1].guess(@count, @feedback, @board)

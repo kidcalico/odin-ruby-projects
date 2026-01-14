@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Human
   attr_reader :name
 
@@ -7,7 +5,7 @@ class Human
     @name = 'Human'
   end
 
-  def guess(count, feedback, board)
+  def guess(*)
     puts 'Enter your guess of any four colors:'
     @guess = input
   end
