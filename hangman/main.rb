@@ -8,19 +8,17 @@
 
 require 'pry-byebug'
 require 'rubocop'
+require 'colorize'
 require_relative 'lib/gallows'
 
 class Game
 
   include Gallows
 
-  attr_accessor :word, :hangman_dictionary
-
   def initialize
     @hangman_dictionary = []
-    @field = []
-    @errs = []
-    @correct = []
+    @round = 0
+    build_dictionary
     first_turn
   end
   
@@ -36,19 +34,35 @@ class Game
   end
   
   def set_word
-    @word = @hangman_dictionary[rand(@hangman_dictionary.length)]
+    @word = @hangman_dictionary[@round]
   end
   
   def first_turn
-    build_dictionary
+    @errs = []
+    @correct = []
     set_word
+    display_field
+    turn
+  end
+  
+  def display_field
     @field = []
     @word.each_char do |char|
-      @field << '_'
+      if @correct.include?(char)
+        @field << char
+      else
+        @field << "_"
+      end
     end
     puts @field.join(' ')
-    get_guess
   end
+  
+    def turn_output
+      puts "Mistakes: " + "#{@errs.join(' ')}".strike.red
+      which_mistake
+      display_field
+      winner?
+    end
 
   def correct_or_err(guess)
     if @word.include?(guess)
@@ -78,45 +92,49 @@ class Game
     end
   end
 
-  def turn_output
-    @field = []
-    @word.each_char do |char|
-      if @correct.include?(char)
-        @field << char
-      else
-        @field << "_"
-      end
-    end
-    puts "Mistakes: #{@errs.join(' ')}"
-    which_mistake
-    puts @field.join(' ')
-    
-    winner?
-
-  end
-
-  def mistake
-
-  end
-
   def winner?
     if @field.join == @word
       puts "\nCongratulations, you guessed the word!"
+      play_again
     elsif @errs.length == 8
-      puts "\nSorry, try again! The correct word was \"#{@word}\""
+      puts "\nSorry, try again! The correct word was " + "\"#{@word}\"".green
+      play_again
     else
-      get_guess
+      turn
     end
   end
 
-  def get_guess
+  def turn
     print "\nEnter a letter (a-z): "
-    @guess = gets.chomp.downcase[0] 
-    # until (('A'..'Z').to_a + ('a'..'z').to_a).include?(@guess) 
+    get_guess
     correct_or_err(@guess)
     turn_output
   end
   
+  def get_guess
+    @count = 0
+    loop do
+      print "Try a different guess (a-z): " if @count > 0
+      @guess = gets.chomp.downcase[0]
+      puts "You already guessed that!" if @errs.include?(@guess) || @correct.include?(@guess)
+      break if ('a'..'z').to_a.include?(@guess) && !@errs.include?(@guess) && !@correct.include?(@guess)
+      @count += 1
+    end
+  end
+
+  def play_again
+    print "Do you want to play again? (Y/N): "
+    @reset = gets.chomp.upcase[0]
+    if @reset == 'N'
+      puts "See you next time!"
+    elsif @reset == 'Y'
+      @round += 1
+      puts "Round #{@round + 1}, go!"
+      first_turn
+    else
+      self.play_again
+    end
+  end
 end
 
-g = Game.new
+Game.new
