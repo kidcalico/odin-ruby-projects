@@ -25,9 +25,10 @@ class Game
   def first_turn
     puts "Round #{@round + 1}, go!"
     set_word
-    which_mistake
-    display_field
-    turn
+    turn_output
+    # which_mistake
+    # display_field
+    # turn
   end
 
   def turn
@@ -92,7 +93,6 @@ class Game
         save.save_game(@hangman_dictionary, @round, @correct, @errs)
         exit
       elsif @guess == 'exit'
-        play_again
         exit
       end
       @guess = @guess[0]
