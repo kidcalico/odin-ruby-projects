@@ -6,7 +6,7 @@ module Gallows
   # @mistakes = [mistake_one, mistake_two, mistake_three, mistake_four, mistake_five, mistake_six, mistake_seven,
   #              mistake_eight]
 
-  def mistake_one
+  def mistake_1
     puts '    ___'
     puts '   |   |'
     puts '   |'
@@ -16,37 +16,37 @@ module Gallows
     puts ' __|__'
   end
 
-  def mistake_two
-    puts '    ___'
-    puts '   |   |'
-    puts '   |   O'
-    puts '   |'
-    puts '   |'
-    puts '   |'
-    puts ' __|__'
-  end
-
-  def mistake_three
+  def mistake_2
     puts '    ___'
     puts '   |   |'
     puts '   |   O'
-    puts '   |   |'
+    puts '   |'
     puts '   |'
     puts '   |'
     puts ' __|__'
   end
 
-  def mistake_four
+  def mistake_3
     puts '    ___'
     puts '   |   |'
     puts '   |   O'
     puts '   |   |'
+    puts '   |'
+    puts '   |'
+    puts ' __|__'
+  end
+
+  def mistake_4
+    puts '    ___'
+    puts '   |   |'
+    puts '   |   O'
+    puts '   |   |'
     puts '   |   |'
     puts '   |'
     puts ' __|__'
   end
 
-  def mistake_five
+  def mistake_5
     puts '    ___'
     puts '   |   |'
     puts '   |   O'
@@ -56,7 +56,7 @@ module Gallows
     puts ' __|__'
   end
 
-  def mistake_six
+  def mistake_6
     puts '    ___'
     puts '   |   |'
     puts '   |   O'
@@ -66,7 +66,7 @@ module Gallows
     puts ' __|__'
   end
 
-  def mistake_seven
+  def mistake_7
     puts '    ___'
     puts '   |   |'
     puts '   |   O'
@@ -74,10 +74,10 @@ module Gallows
     puts '   |   |'
     puts '   |  /'
     puts ' __|__'
-    puts "One more mistake allowed!!!\n\n".red
+    puts "One more mistake allowed!!!\n".red
   end
 
-  def mistake_eight
+  def mistake_8
     puts '    ___'
     puts '   |   |'
     puts '   |   O'
