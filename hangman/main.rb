@@ -44,8 +44,13 @@ class StartScreen
   def load_game
     print "Enter the name of your saved file: "
     @keyword = gets.chomp.downcase
-    load = YAML.load_file("#{@keyword}.yaml")
-    Game.new(load[:hangman_dictionary], load[:round], load[:correct], load[:errs])
+    if File.exist?("#{@keyword}.yaml")
+      load = YAML.load_file("#{@keyword}.yaml")
+      Game.new(load[:hangman_dictionary], load[:round], load[:correct], load[:errs])
+    else 
+      puts "File does not exist, please try again."
+      self.load_game
+    end
   end
 end
 
