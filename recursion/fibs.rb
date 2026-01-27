@@ -21,6 +21,18 @@ def fibs_rec(num, seq = [])
   return seq
 end
 
+# def fibs_rec_v2(num)
+#   seq =[]
+#   if num == 1
+#     seq << 0
+#   elsif num == 2
+#     seq << 1
+#   else
+#     seq << fibs_rec_v2(num-1) + fibs_rec_v2(num-2)
+#   end
+# end
+
 x = 9
+# puts "Recursive function: #{fibs_rec_v2(x)}"
 puts "Recursive function: #{fibs_rec(x)}"
 puts "Looping function: #{fibs(x)}"
