@@ -14,7 +14,8 @@ module TurnMethods
   def turn(person, opp, num)
     if %w[X O].include?(spots[num - 1])
       @last_turn = opp
-      puts "Try again!".colorize(:red)
+      puts "Try again!"
+      # .colorize(:red)
     else
       spots[num - 1] = person # .colorize(:green)
       @last_turn = person
