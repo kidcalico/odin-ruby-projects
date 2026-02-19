@@ -16,7 +16,7 @@ module TurnMethods
       @last_turn = opp
       puts "Try again!".colorize(:red)
     else
-      spots[num - 1] = person # .colorize(:green)
+      spots[num - 1] = person
       @last_turn = person
     end
   end
