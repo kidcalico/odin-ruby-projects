@@ -15,8 +15,7 @@ class LinkedList
   end
 
   def prepend(value)
-    current_node = @head
-    @head = Node.new(value, current_node)
+    @head = Node.new(value, @head)
   end
 
   def size
@@ -30,12 +29,10 @@ class LinkedList
   end
 
   def head
-    return nil if @head.value == nil
     @head.value
   end
   
   def tail
-    return nil if @head.value == nil
     current_node = @head
     while current_node.next_node != nil
       current_node = current_node.next_node
@@ -44,16 +41,15 @@ class LinkedList
   end
   
   def at(index)
-    return nil if @head.value == nil
     current_node = @head
     index.times do
+      return nil if current_node == nil
       current_node = current_node.next_node
     end
     current_node.value
   end
   
   def pop
-    return nil if @head.value == nil
     current_node = @head
     @head = @head.next_node
     current_node.value
