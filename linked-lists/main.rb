@@ -12,7 +12,7 @@ list.append('alligator')
 list.append('tiger')
 list.append('fox')
 
-puts list.index('alligator')
+puts list.index('fox')
 puts list
 
 # puts list.head
