@@ -1,6 +1,6 @@
 require_relative 'linkedlist'
 
-class HashMap
+class HashSet
   attr_accessor :bucket, :count
 
   def initialize
@@ -13,41 +13,33 @@ class HashMap
   def hash(key)
     hash_code = 0
     prime_number = 31
-    # constant = ((5.0 ** 0.5) - 1)/2
 
     key.each_char { |char| hash_code = prime_number * hash_code + char.ord }
 
     hash_code = hash_code % @capacity
   end
 
-  def set(key, value)
-    if self.has?(key)
-      # find the node with the key and reassign value
-      current_node = @bucket[hash(key)].head
-      while current_node.key != key
-        current_node = current_node.next_node
-      end
-      current_node.value = value
-    else
+  def set(key)
+    if !self.has?(key)
       bucket_grow if @capacity * @load_factor <= @count
-      @bucket[hash(key)].append(key, value)
+      @bucket[hash(key)].append(key)
       @count += 1
     end
   end
-    
+
   def get(key)
-    @bucket.each do |list|
-      current_node = list.head
+    # return index for given key, as there are no values in the set
+    @bucket.each_index do |index|
+      current_node = @bucket[index].head
       while !current_node.nil?
-        return current_node.value if current_node.key == key
+        return index if current_node.key == key
         current_node = current_node.next_node
       end
     end
-    nil
   end
 
   def has?(key)
-    return true if self.keys.include?(key)
+    return true if self.entries.include?(key)
     false
   end
 
@@ -58,13 +50,12 @@ class HashMap
         list_index = 0
         while !current_node.nil?
           if current_node.key == key
-            value = current_node.value
             @bucket[index].remove_at(list_index)
-            return value
+            return key
           end
           current_node = current_node.next_node
           list_index += 1
-        end        
+        end
       end
     end
   end
@@ -77,37 +68,12 @@ class HashMap
     @bucket = Array.new(@capacity) { LinkedList.new }
   end
 
-  def keys
-    @bucket_keys = []
-    @bucket.each do |list|
-      current_node = list.head
-      while !current_node.nil?
-        @bucket_keys << current_node.key
-        current_node = current_node.next_node
-      end
-    end
-    @bucket_keys
-  end
-
-  
-  def values
-    @bucket_values = []
-    @bucket.each do |list|
-      current_node = list.head
-      while !current_node.nil?
-        @bucket_values << current_node.value
-        current_node = current_node.next_node
-      end
-    end
-    @bucket_values
-  end
-
   def entries
     entries = []
     @bucket.each do |list|
       current_node = list.head
       while !current_node.nil?
-        entries << [ current_node.key, current_node.value ]
+        entries << current_node.key
         current_node = current_node.next_node
       end
     end
@@ -128,7 +94,7 @@ class HashMap
     old_bucket.each do |node|
       current_node = node.head
       while !current_node.nil?
-        self.set(current_node.key, current_node.value)
+        self.set(current_node.key)
         current_node = current_node.next_node
       end
     end

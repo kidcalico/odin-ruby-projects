@@ -7,7 +7,7 @@ class LinkedList
     @head = nil
   end
 
-  def append(key, value)
+  def append(key, value = nil)
     return @head = Node.new(key, value) if @head == nil
     current_node = @head
     while current_node.next_node != nil
