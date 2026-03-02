@@ -36,11 +36,6 @@ class Tree
     root
   end
 
-  def delete(value)
-    return unless !self.include?(value)
-
-  end
-
   private
 
   def build_tree(array, arr_start = @arr_start, arr_end = @arr_end)
