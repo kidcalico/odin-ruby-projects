@@ -9,7 +9,6 @@ class Tree
     @array = array.uniq.sort
     @arr_start = 0
     @arr_end = @array.length - 1
-    p @array
     @root = build_tree(@array, @arr_start, @arr_end)
   end
 
@@ -48,12 +47,10 @@ class Tree
     return nil if arr_start > arr_end
 
     mid = (arr_start + arr_end) / 2
-    p "Mid: #{array[mid]}"
-    # binding.pry
     root = Node.new(array[mid])
 
-    root.set_left(build_tree(array, arr_start, (mid - 1)))
-    root.set_right(build_tree(array, (mid + 1), arr_end))
+    root.left = build_tree(array, arr_start, (mid - 1))
+    root.right = build_tree(array, (mid + 1), arr_end)
 
     root
   end
