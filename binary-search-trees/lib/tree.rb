@@ -87,11 +87,38 @@ class Tree
 
     level_order_recursive(root.left, index + 1, queue, &block) if !root.left.nil?
     level_order_recursive(root.right, index + 1, queue, &block) if !root.right.nil?
-    
+
     if index == 0
       queue.flatten.each { |node| yield node }
     end
+
+    self
+  end
+
+  def inorder(root = @root, &block)
+    return to_enum(:inorder) unless block_given?
+    return if root.nil?
+    inorder(root.left, &block)
+    yield root.value
+    inorder(root.right, &block)
+    self
+  end
+
+  def preorder(root = @root, &block)
+    return to_enum(:inorder) unless block_given?
+    return if root.nil?
+    yield root.value
+    inorder(root.left, &block)
+    inorder(root.right, &block)
+    self
+  
     
+  def postorder(root = @root, &block)
+    return to_enum(:inorder) unless block_given?
+    return if root.nil?
+    inorder(root.left, &block)
+    inorder(root.right, &block)
+    yield root.value
     self
   end
 
