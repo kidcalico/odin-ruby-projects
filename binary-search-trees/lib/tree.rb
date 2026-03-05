@@ -73,6 +73,26 @@ class Tree
       queue << queue[0].right if !queue[0].right.nil?
       yield queue.shift.value
     end
+
+    self
+  end
+
+  def level_order_recursive(root = @root, index = 0, queue = [], &block)
+    return to_enum(:level_order_recursive) unless block_given?
+    return if root.value.nil?
+
+    queue << [] if queue.length <= index
+
+    queue[index] << root.value
+
+    level_order_recursive(root.left, index + 1, queue, &block) if !root.left.nil?
+    level_order_recursive(root.right, index + 1, queue, &block) if !root.right.nil?
+    
+    if index == 0
+      queue.flatten.each { |node| yield node }
+    end
+    
+    self
   end
 
   private
