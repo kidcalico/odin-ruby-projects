@@ -105,16 +105,17 @@ class Tree
   end
 
   def preorder(root = @root, &block)
-    return to_enum(:inorder) unless block_given?
+    return to_enum(:preorder) unless block_given?
     return if root.nil?
     yield root.value
     inorder(root.left, &block)
     inorder(root.right, &block)
     self
+  end
   
     
   def postorder(root = @root, &block)
-    return to_enum(:inorder) unless block_given?
+    return to_enum(:postorder) unless block_given?
     return if root.nil?
     inorder(root.left, &block)
     inorder(root.right, &block)
