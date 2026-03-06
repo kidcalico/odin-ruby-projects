@@ -1,22 +1,25 @@
 require_relative 'lib/tree'
 
-# arr = []
-# 20.times do
-#   arr << rand(1000)
-# end
+array = Array.new(20) { rand(1..100) }
 
-arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+tree = Tree.new(array)
 
-tree = Tree.new(arr)
 tree.pretty_print
+puts "Balanced? #{tree.balanced?}\n"
 
-tree.insert(100)
-tree.insert(2)
-tree.insert(68)
-tree.insert(102)
+puts  "Level Order Traversal: #{tree.level_order.to_a}"
+puts  "Inorder Traversal: #{tree.inorder.to_a}"
+puts  "Preorder Traversal: #{tree.preorder.to_a}"
+puts  "Postorder Traversal: #{tree.postorder.to_a}"
 
-tree.delete(4)
+tree.insert(rand(90..110))
+tree.insert(rand(90..110))
+tree.insert(rand(90..110))
+
 tree.pretty_print
-tree.level_order { |node| print "#{node} " }
-print "\n"
-p tree.level_order.to_a
+puts "Balanced? #{tree.balanced?}\n"
+
+tree.rebalance
+
+tree.pretty_print
+puts "Balanced? #{tree.balanced?}\n"

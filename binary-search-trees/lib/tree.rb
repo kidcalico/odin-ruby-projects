@@ -59,18 +59,17 @@ class Tree
 
   def replacement(root)
     current_node = root.right
-    while !current_node.nil? && !current_node.left.nil?
-      current_node = current_node.left
-    end
-    return current_node
+    current_node = current_node.left while !current_node.nil? && !current_node.left.nil?
+    current_node
   end
 
   def level_order
     return to_enum(:level_order) unless block_given?
+
     queue = [@root]
-    while !queue.empty?
-      queue << queue[0].left if !queue[0].left.nil?
-      queue << queue[0].right if !queue[0].right.nil?
+    until queue.empty?
+      queue << queue[0].left unless queue[0].left.nil?
+      queue << queue[0].right unless queue[0].right.nil?
       yield queue.shift.value
     end
 
@@ -85,12 +84,10 @@ class Tree
 
     queue[index] << root.value
 
-    level_order_recursive(root.left, index + 1, queue, &block) if !root.left.nil?
-    level_order_recursive(root.right, index + 1, queue, &block) if !root.right.nil?
+    level_order_recursive(root.left, index + 1, queue, &block) unless root.left.nil?
+    level_order_recursive(root.right, index + 1, queue, &block) unless root.right.nil?
 
-    if index == 0
-      queue.flatten.each { |node| yield node }
-    end
+    queue.flatten.each(&block) if index == 0
 
     self
   end
@@ -98,6 +95,7 @@ class Tree
   def inorder(root = @root, &block)
     return to_enum(:inorder) unless block_given?
     return if root.nil?
+
     inorder(root.left, &block)
     yield root.value
     inorder(root.right, &block)
@@ -107,23 +105,76 @@ class Tree
   def preorder(root = @root, &block)
     return to_enum(:preorder) unless block_given?
     return if root.nil?
+
     yield root.value
-    inorder(root.left, &block)
-    inorder(root.right, &block)
+    preorder(root.left, &block)
+    preorder(root.right, &block)
     self
   end
-  
-    
+
   def postorder(root = @root, &block)
     return to_enum(:postorder) unless block_given?
     return if root.nil?
-    inorder(root.left, &block)
-    inorder(root.right, &block)
+
+    postorder(root.left, &block)
+    postorder(root.right, &block)
     yield root.value
     self
   end
 
+  def height(value, root = @root)
+    return nil unless include?(value)
+
+    current_node = root
+    while current_node.value != value
+      current_node = current_node.left if value < current_node.value
+      current_node = current_node.right if value > current_node.value
+    end
+    max_height(current_node)
+  end
+
+  def depth(value, root = @root, index = 0)
+    return nil unless include?(value)
+    return index if root.value == value
+
+    index = depth(value, root.left, index + 1) if root.value > value
+    index = depth(value, root.right, index + 1) if root.value < value
+    index
+  end
+
+  def balanced?
+    return true unless balanced_recursion == -1
+
+    false
+  end
+
+  def rebalance
+    arr = inorder.to_a.sort
+    @root = build_tree(arr, 0, arr.length - 1)
+  end
+
   private
+
+  def balanced_recursion(root = @root)
+    return 0 if root.nil?
+
+    left = balanced_recursion(root.left)
+    right = balanced_recursion(root.right)
+
+    return -1 if left == -1 || right == -1
+    return -1 if (left - right).abs > 1
+
+    [left, right].max + 1
+  end
+
+  def max_height(root = @root)
+    return -1 if root.nil?
+
+    left = max_height(root.left)
+    right = max_height(root.right)
+
+    [left, right].max + 1
+  end
 
   def build_tree(array, arr_start = @arr_start, arr_end = @arr_end)
     return nil if arr_start > arr_end
